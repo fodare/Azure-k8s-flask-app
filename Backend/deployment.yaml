@@ -23,7 +23,7 @@ spec:
         app: backendservice
     spec:
       containers:
-      - image: foloo12/backend:0.0.7
+      - image: foloo12/backend
         imagePullPolicy: IfNotPresent
         name: backendservice
         resources: {}
