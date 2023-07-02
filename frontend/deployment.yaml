@@ -23,7 +23,7 @@ spec:
         app: frontendservice
     spec:
       containers:
-      - image: foloo12/frontend:0.0.6
+      - image: foloo12/frontend:0.0.7
         imagePullPolicy: IfNotPresent
         name: frontendservice
         resources: {}
