@@ -1,0 +1,36 @@
+# start by pulling the python image
+# FROM python:3.8-alpine
+
+# # copy the requirements file into the image
+# COPY ./Backend/requirements.txt /app/requirements.txt
+
+# # switch working directory
+# WORKDIR /app
+
+# # install the dependencies and packages in the requirements file
+# RUN pip install -r requirements.txt
+
+# # Expose Port
+# EXPOSE 5000
+
+# # Container health check
+# HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \ 
+#     CMD curl -f http://localhost:5000/ || exit 1
+
+# # copy every content from the local file to the image
+# COPY . /app
+
+# # configure the container to run in an executed manner
+# ENTRYPOINT [ "python" ]
+
+# CMD ["app.py" ]
+FROM python:3.10.0-alpine3.15
+WORKDIR /app
+COPY ./Backend/requirements.txt .
+RUN pip install -r requirements.txt
+COPY Backend backend
+EXPOSE 5001
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \ 
+    CMD curl -f http://localhost:5001/ || exit 1
+
+ENTRYPOINT [ "python", "./backend/app.py" ]

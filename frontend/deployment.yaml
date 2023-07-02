@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontendservice
+  name: frontendservice
+  namespace: default
+  # uid: 590128ab-8de6-4ad4-8cc6-5368a7621557
+spec:
+  replicas: 1
+  minReadySeconds: 45
+  selector:
+    matchLabels:
+      app: frontendservice
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: frontendservice
+    spec:
+      containers:
+      - image: foloo12/frontend:0.0.6
+        imagePullPolicy: IfNotPresent
+        name: frontendservice
+        resources: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+---
+# Service Defination
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: frontendservice
+  name: frontendservice
+  namespace: default
+  # uid: f2f4ab6a-9841-43be-bb4d-45ef36d543e3
+spec:
+  ports:
+  # - nodePort: 30668
+  - port: 5000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: frontendservice
+  sessionAffinity: None
+  type: NodePort
