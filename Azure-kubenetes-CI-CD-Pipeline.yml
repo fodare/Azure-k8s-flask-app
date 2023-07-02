@@ -1,0 +1,72 @@
+trigger:
+- main
+
+resources:
+- repo: self
+
+pool:
+  name: Default
+  # vmImage: ubuntu-latest
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+# Stage 1
+# Build docker images
+# publish cluster files
+- stage: Build
+  displayName: Build image
+  jobs:
+    - job: Build
+      displayName: Build
+      pool:
+        name: Default
+        steps:
+        - task: Docker@2
+          inputs:
+          containerRegistry: 'Docker registry connection'
+          repository: 'foloo12/flask-app'
+          command: 'buildAndPush'
+          Dockerfile: '**/Dockerfile'
+          tags: '$(tag)'
+
+        - task: CopyFiles@2
+          inputs:
+            SourceFolder: '$(System.DefaultWorkingDirectory)'
+            Contents: '**/*.yaml'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'manifests'
+            publishLocation: 'Container'
+
+# Stage 2
+# Download the k8s files
+# Deploy to cluster with docker image
+- stage: Deploy
+  displayName: Deploy image
+  jobs:
+    - job: Deploy
+      displayName: Deploy
+      pool:
+        name: Default
+      steps:
+        - task: DownloadBuildArtifacts@1
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'manifests'
+            itemPattern: '**/*.yaml'
+            downloadPath: '$(System.ArtifactsDirectory)'
+        - task: KubernetesManifest@1
+          inputs:
+            action: 'deploy'
+            connectionType: 'kubernetesServiceConnection'
+            kubernetesServiceConnection: 'K8s cluster connection'
+            namespace: 'default'
+            manifests: '$(System.ArtifactsDirectory)/deployment.yaml'
+            containers: 'foloo12/flask-app:$(tag)'
+
