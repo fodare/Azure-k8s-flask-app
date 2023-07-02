@@ -1,0 +1,30 @@
+trigger:
+- main
+
+pool:
+  name: Default
+  # vmImage: ubuntu-latest
+
+steps:
+- script: echo k8s Terrafrom Azure!
+  displayName: 'Run a one-line script'
+
+- task: DownloadSecureFile@1
+  name: ssh_public_key
+  inputs:
+    secureFile: 'azure_rsa.pub'
+- task: TerraformCLI@0
+  inputs:
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Azure-AKS'
+    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(ssh_public_key.secureFilePath)'
+    backendType: 'azurerm'
+    backendServiceArm: 'Azure-Service-Connection'
+    ensureBackend: true
+    backendAzureRmResourceGroupName: 'terraform-backend-rg'
+    backendAzureRmResourceGroupLocation: 'northeurope'
+    backendAzureRmStorageAccountName: 'storageacctflaskdare'
+    backendAzureRmContainerName: 'storageacctflaskdarecontainer'
+    backendAzureRmKey: 'kubernetes-dev.tfstate'
+    allowTelemetryCollection: true
+
