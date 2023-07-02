@@ -35,9 +35,10 @@ steps:
     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(ssh_public_key.secureFilePath)'
     allowTelemetryCollection: true
 
-- task: TerraformTaskV4@4
+- task: TerraformCLI@0
   inputs:
-    provider: 'azurerm'
     command: 'destroy'
-    environmentServiceNameAzureRM: 'TestSubscription(2556f72d-531e-4f12-b57b-892ab4e07d2b)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Azure-AKS'
+    # commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(ssh_public_key.secureFilePath)'
+    allowTelemetryCollection: true
 
