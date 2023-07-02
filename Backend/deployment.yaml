@@ -48,4 +48,4 @@ spec:
   selector:
     app: backendservice
   sessionAffinity: None
-  type: NodePort
+  type: LoadBalancer
