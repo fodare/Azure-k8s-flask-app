@@ -1,3 +1,4 @@
+# Create a resource group where the cluster.
 resource "azurerm_resource_group" "resource_group" {
   name     = "${var.resource_group}_${var.environment}"
   location = var.location
@@ -8,6 +9,7 @@ provider "azurerm" {
   features {}
 }
 
+#  Create cluster
 resource "azurerm_kubernetes_cluster" "terraform-k8s" {
   name                = "${var.cluster_name}_${var.environment}"
   location            = azurerm_resource_group.resource_group.location
@@ -39,6 +41,7 @@ resource "azurerm_kubernetes_cluster" "terraform-k8s" {
   }
 }
 
+# Terraform state stored in a backend.
 terraform {
   backend "azurerm" {
     # storage_account_name="<<storage_account_name>>" #OVERRIDE in TERRAFORM init
