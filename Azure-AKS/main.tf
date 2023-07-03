@@ -47,9 +47,9 @@ resource "kubernetes_ingress" "defaultingress" {
     name      = "defaultingress"
     namespace = "default"
     annotations = {
-      "kubernetes.io/ingress.class"           = "nginx"
-      "alb.ingress.kubernetes.io/scheme"      = "internet-facing"
-      "alb.ingress.kubernetes.io/target-type" = "ip"
+      # "nginx.ingress.kubernetes.io/ssl-redirect" : "false"
+      "nginx.ingress.kubernetes.io/use-regex" : "true"
+      "nginx.ingress.kubernetes.io/rewrite-target" : "/"
     }
   }
   spec {
