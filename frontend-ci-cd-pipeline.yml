@@ -23,3 +23,24 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/frontend/dockerfile'
         buildContext: '.'
+- stage: Deploy
+  displayName: Deploy image
+  jobs:
+    - job: Deploy
+      displayName: Deploy Job
+      steps:
+        - task: CopyFiles@2
+          displayName: Copy kubernetes manifests
+          inputs:
+            SourceFolder: '$(System.DefaultWorkingDirectory)'
+            Contents: '**/*.yaml'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        
+        - task: PublishBuildArtifacts@1
+          displayName: Publish manifests
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'manifests'
+            publishLocation: 'Container'
+            
+        
