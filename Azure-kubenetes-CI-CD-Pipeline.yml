@@ -29,38 +29,38 @@ stages:
           Dockerfile: '$(Build.SourcesDirectory)/frontend/dockerfile'
           tags: '$(tag)'
 
-      - task: CopyFiles@2
-        inputs:
-          SourceFolder: '$(System.DefaultWorkingDirectory)/frontend'
-          Contents: '**/*.yaml'
-          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+#       - task: CopyFiles@2
+#         inputs:
+#           SourceFolder: '$(System.DefaultWorkingDirectory)/frontend'
+#           Contents: '**/*.yaml'
+#           TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'manifests'
-          publishLocation: 'Container'
-- stage: Deploy
-  displayName: Deploy image
-  jobs:
-    - job: Deploy
-      displayName: Deploy
-      pool:
-        name: Default
-      steps:
-        - task: DownloadBuildArtifacts@1
-          inputs:
-            buildType: 'current'
-            downloadType: 'single'
-            artifactName: 'manifests'
-            itemPattern: '**/*.yaml'
-            downloadPath: '$(System.ArtifactsDirectory)'
-        - task: KubernetesManifest@1
-          inputs:
-            action: 'deploy'
-            connectionType: 'kubernetesServiceConnection'
-            kubernetesServiceConnection: 'K8s cluster connection'
-            namespace: 'default'
-            manifests: '$(System.ArtifactsDirectory)/frontend/deployment.yaml'
-            containers: 'foloo12/frontend:$(tag)'
+#       - task: PublishBuildArtifacts@1
+#         inputs:
+#           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#           ArtifactName: 'manifests'
+#           publishLocation: 'Container'
+# - stage: Deploy
+#   displayName: Deploy image
+#   jobs:
+#     - job: Deploy
+#       displayName: Deploy
+#       pool:
+#         name: Default
+#       steps:
+#         - task: DownloadBuildArtifacts@1
+#           inputs:
+#             buildType: 'current'
+#             downloadType: 'single'
+#             artifactName: 'manifests'
+#             itemPattern: '**/*.yaml'
+#             downloadPath: '$(System.ArtifactsDirectory)'
+#         - task: KubernetesManifest@1
+#           inputs:
+#             action: 'deploy'
+#             connectionType: 'kubernetesServiceConnection'
+#             kubernetesServiceConnection: 'K8s cluster connection'
+#             namespace: 'default'
+#             manifests: '$(System.ArtifactsDirectory)/frontend/deployment.yaml'
+#             containers: 'foloo12/frontend:$(tag)'
 
