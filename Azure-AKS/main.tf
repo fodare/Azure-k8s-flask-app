@@ -47,7 +47,7 @@ resource "kubernetes_ingress" "defaultingress" {
     name      = "defaultingress"
     namespace = "default"
     annotations = {
-      "kubernetes.io/ingress.class"           = "alb"
+      "kubernetes.io/ingress.class"           = "nginx"
       "alb.ingress.kubernetes.io/scheme"      = "internet-facing"
       "alb.ingress.kubernetes.io/target-type" = "ip"
     }
