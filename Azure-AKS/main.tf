@@ -41,6 +41,40 @@ resource "azurerm_kubernetes_cluster" "terraform-k8s" {
   }
 }
 
+# Ingress configuration
+resource "kubernetes_ingress" "defaultIngress" {
+  metadata {
+    name      = "defaultIngress"
+    namespace = "default"
+    annotations = {
+      "kubernetes.io/ingress.class"           = "alb"
+      "alb.ingress.kubernetes.io/scheme"      = "internet-facing"
+      "alb.ingress.kubernetes.io/target-type" = "ip"
+    }
+  }
+  spec {
+    rule {
+      http {
+        path {
+          path = "/frontendservice/*"
+          backend {
+            service_name = "frontendservice"
+            service_port = 5000
+          }
+        }
+        path {
+          path = "backendservice"
+          backend {
+            service_name = "/backendservice/*"
+            service_port = 5001
+          }
+        }
+      }
+    }
+  }
+
+}
+
 # Terraform state stored in a backend.
 terraform {
   backend "azurerm" {
