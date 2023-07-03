@@ -42,43 +42,43 @@ resource "azurerm_kubernetes_cluster" "terraform-k8s" {
 }
 
 # Ingress configuration
-resource "kubernetes_ingress_v1" "defaultingres" {
-  metadata {
-    name      = "test-ingress"
-    namespace = "default"
-    annotations = {
-      "nginx.ingress.kubernetes.io/rewrite-target" = "/$1"
-    }
-  }
-  spec {
-    rule {
-      http {
-        path {
-          path = "/frontendservice/*"
-          backend {
-            service {
-              name = "frontendservice"
-              port {
-                number = 5000
-              }
-            }
-          }
-        }
-        path {
-          path = "/backendservice/*"
-          backend {
-            service {
-              name = "backendservice"
-              port {
-                number = 5001
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
+# resource "kubernetes_ingress_v1" "defaultingres" {
+#   metadata {
+#     name      = "test-ingress"
+#     namespace = "default"
+#     annotations = {
+#       "nginx.ingress.kubernetes.io/rewrite-target" = "/$1"
+#     }
+#   }
+#   spec {
+#     rule {
+#       http {
+#         path {
+#           path = "/frontendservice/*"
+#           backend {
+#             service {
+#               name = "frontendservice"
+#               port {
+#                 number = 5000
+#               }
+#             }
+#           }
+#         }
+#         path {
+#           path = "/backendservice/*"
+#           backend {
+#             service {
+#               name = "backendservice"
+#               port {
+#                 number = 5001
+#               }
+#             }
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
 
 # Terraform state stored in a backend.
 terraform {
