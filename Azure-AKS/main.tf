@@ -42,7 +42,7 @@ resource "azurerm_kubernetes_cluster" "terraform-k8s" {
 }
 
 # Ingress configuration
-resource "kubernetes_ingress" "defaultingress" {
+resource "kubernetes_ingress_v1" "defaultingress" {
   metadata {
     name      = "defaultingress"
     namespace = "default"
