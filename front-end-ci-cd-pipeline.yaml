@@ -17,12 +17,16 @@ stages:
       name: Default
       # vmImage: ubuntu-latest
     steps:
+    - task: CopyFiles@2
+      inputs:
+        Contents: '**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: Docker@2
       displayName: Build push image
       inputs:
         containerRegistry: 'Docker registry connection'
         repository: 'foloo12/frontend'
         command: 'buildAndPush'
-        Dockerfile: '$(System.DefaultWorkingDirectory)/frontend/dockerfile'
-        buildContext: '$(System.DefaultWorkingDirectory)/frontend'
+        Dockerfile: '$(Build.ArtifactStagingDirectory)/frontend/dockerfile'
+        buildContext: '$(Build.ArtifactStagingDirectory)/frontend'
         tags: '$(tag)'
