@@ -42,5 +42,19 @@ stages:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)'
             ArtifactName: 'manifests'
             publishLocation: 'Container'
-            
         
+        - task: DownloadBuildArtifacts@1
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'manifests'
+            downloadPath: '$(System.ArtifactsDirectory)'
+        
+        - task: KubernetesManifest@1
+          inputs:
+            action: 'deploy'
+            connectionType: 'kubernetesServiceConnection'
+            kubernetesServiceConnection: 'K8s cluster connection'
+            namespace: 'default'
+            manifests: '$(System.ArtifactsDirectory)/frontend/deployment.yaml'
+            containers: '$(imageName)'
