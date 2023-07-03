@@ -1,8 +1,8 @@
 trigger:
 - main
 
-resources:
-- repo: self
+# resources:
+# - repo: self
 
 pool:
   name: Default
