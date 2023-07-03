@@ -26,14 +26,14 @@ stages:
         - task: Docker@2
           inputs:
           containerRegistry: 'Docker registry connection'
-          repository: 'foloo12/flask-app'
+          repository: 'foloo12/frontend'
           command: 'buildAndPush'
-          Dockerfile: '**/Dockerfile'
+          Dockerfile: '**/frontend/dockerfile'
           tags: '$(tag)'
 
         - task: CopyFiles@2
           inputs:
-            SourceFolder: '$(System.DefaultWorkingDirectory)'
+            SourceFolder: '$(System.DefaultWorkingDirectory)/frontend'
             Contents: '**/*.yaml'
             TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
@@ -67,6 +67,6 @@ stages:
             connectionType: 'kubernetesServiceConnection'
             kubernetesServiceConnection: 'K8s cluster connection'
             namespace: 'default'
-            manifests: '$(System.ArtifactsDirectory)/deployment.yaml'
-            containers: 'foloo12/flask-app:$(tag)'
+            manifests: '$(System.ArtifactsDirectory)/frontend/deployment.yaml'
+            containers: 'foloo12/frontend:$(tag)'
 
