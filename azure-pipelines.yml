@@ -27,5 +27,5 @@ stages:
         repository: 'foloo12/frontend'
         command: 'buildAndPush'
         Dockerfile: '**/dockerfile'
-        buildContext: '**/'
+        buildContext: '$(Build.ArtifactStagingDirectory)'
         tags: '$(tag)'
