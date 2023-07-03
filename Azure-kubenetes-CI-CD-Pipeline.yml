@@ -4,17 +4,14 @@ trigger:
 resources:
 - repo: self
 
-pool:
-  name: Default
-  # vmImage: ubuntu-latest
+# pool:
+#   name: Default
+#   # vmImage: ubuntu-latest
 
 variables:
   tag: '$(Build.BuildId)'
 
 stages:
-# Stage 1
-# Build docker images
-# publish cluster files
 - stage: Build
   displayName: Build image
   jobs:
@@ -26,11 +23,11 @@ stages:
       - task: Docker@2
         displayName: Build docker Image
         inputs:
-        containerRegistry: 'Docker registry connection'
-        repository: 'foloo12/frontend'
-        command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/frontend/dockerfile'
-        tags: '$(tag)'
+          containerRegistry: 'Docker registry connection'
+          repository: 'foloo12/frontend'
+          command: 'buildAndPush'
+          Dockerfile: '$(Build.SourcesDirectory)/frontend/dockerfile'
+          tags: '$(tag)'
 
       - task: CopyFiles@2
         inputs:
@@ -43,10 +40,6 @@ stages:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: 'manifests'
           publishLocation: 'Container'
-
-# Stage 2
-# Download the k8s files
-# Deploy to cluster with docker image
 - stage: Deploy
   displayName: Deploy image
   jobs:
