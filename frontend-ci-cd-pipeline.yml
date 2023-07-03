@@ -53,8 +53,11 @@ stages:
         - task: KubernetesManifest@1
           inputs:
             action: 'deploy'
-            connectionType: 'kubernetesServiceConnection'
-            kubernetesServiceConnection: 'K8s cluster connection'
+            connectionType: 'azureResourceManager'
+            azureSubscriptionConnection: 'TestSubscription(2556f72d-531e-4f12-b57b-892ab4e07d2b)'
+            azureResourceGroup: 'kubernetes_dev'
+            kubernetesCluster: 'k8stest_dev'
+            useClusterAdmin: true
             namespace: 'default'
             manifests: '$(System.ArtifactsDirectory)/frontend/deployment.yaml'
             containers: '$(imageName)'
