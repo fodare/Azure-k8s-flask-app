@@ -18,11 +18,11 @@ stages:
       # vmImage: ubuntu-latest
     steps:
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build push image
       inputs:
         containerRegistry: 'Docker registry connection'
         repository: 'foloo12/frontend'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/frontend/dockerfile'
-        buildContext: '**'
+        Dockerfile: '$(System.DefaultWorkingDirectory)/frontend/dockerfile'
+        buildContext: '$(System.DefaultWorkingDirectory)/frontend'
         tags: '$(tag)'
