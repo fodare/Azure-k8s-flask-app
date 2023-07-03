@@ -1,8 +1,8 @@
 trigger:
 - main
 
-# resources:
-# - repo: self
+resources:
+- repo: self
 
 pool:
   name: Default
@@ -24,11 +24,12 @@ stages:
       name: Default
       steps:
       - task: Docker@2
+        displayName: Build docker Image
         inputs:
         containerRegistry: 'Docker registry connection'
         repository: 'foloo12/frontend'
         command: 'buildAndPush'
-        Dockerfile: '**/frontend/dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/frontend/dockerfile'
         tags: '$(tag)'
 
       - task: CopyFiles@2
