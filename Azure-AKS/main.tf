@@ -133,11 +133,11 @@ resource "azurerm_application_gateway" "appgateway" {
   }
   
   # Remove
-  frontend_ip_configuration { 
-    name = "${azurerm_virtual_network.testnetwork.name}-pr" 
-    subnet_id = data.azurerm_subnet.appgwsubnet.id
-    private_ip_address_allocation = "Dynamic" 
-    } 
+  # frontend_ip_configuration { 
+  #   name = "${azurerm_virtual_network.testnetwork.name}-pr" 
+  #   subnet_id = data.azurerm_subnet.appgwsubnet.id
+  #   private_ip_address_allocation = "Dynamic" 
+  #   } 
 
   backend_address_pool {
     name = "${azurerm_virtual_network.testnetwork.name}-beap"
