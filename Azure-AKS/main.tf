@@ -146,7 +146,7 @@ resource "azurerm_application_gateway" "appgateway" {
 
   http_listener {
     name = "${azurerm_virtual_network.testnetwork.name}-httplstn"
-    frontend_ip_configuration = "${azurerm_virtual_network.testnetwork.name}-feip"
+    frontend_ip_configuration_name = "${azurerm_virtual_network.testnetwork.name}-feip"
     frontend_port_name = "${azurerm_virtual_network.testnetwork.name}-feport"
     protocol = "Http"
   }
@@ -155,11 +155,10 @@ resource "azurerm_application_gateway" "appgateway" {
     name = "${azurerm_virtual_network.testnetwork.name}-rqrt"
     rule_type = "Basic"
     http_listener_name = "${azurerm_virtual_network.testnetwork.name}-httplstn"
-    backend_address_pool = "${azurerm_virtual_network.testnetwork.name}-beap"
+    backend_address_pool_name = "${azurerm_virtual_network.testnetwork.name}-beap"
     backend_http_settings_name = "${azurerm_virtual_network.testnetwork.name}-be-htst"
   }
-  tags  {
-    enviroment = var.environment
-  }
+  tags  = var.environment
+  
   depends_on = [ azurerm_virtual_network.testnetwork, azurerm_public_ip.publicip ]
 }
