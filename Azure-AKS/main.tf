@@ -113,7 +113,7 @@ resource "azurerm_application_gateway" "appgateway" {
   location = var.location
   sku {
     name = var.app_gateway_sku
-    tier = "Standard_v2"
+    tier = "Standard_v1"
     capacity = 2
   }
 
@@ -140,6 +140,7 @@ resource "azurerm_application_gateway" "appgateway" {
     name = "${azurerm_virtual_network.testnetwork.name}-be-htst"
     cookie_based_affinity = "Disabled"
     port = 80
+    path = "/frontendservice/"
     protocol = "Http"
     request_timeout = 1
   }
