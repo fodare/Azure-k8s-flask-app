@@ -61,7 +61,7 @@ variable "app_gateway_name" {
 
 variable "app_gateway_sku" {
   description = "Name of the Application Gateway SKU"
-  default     = "Standard_v2"
+  default     = "Standard"
 }
 
 variable "aks_dns_service_ip" {
