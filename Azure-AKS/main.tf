@@ -131,6 +131,13 @@ resource "azurerm_application_gateway" "appgateway" {
     name = "${azurerm_virtual_network.testnetwork.name}-feip"
     public_ip_address_id = azurerm_public_ip.publicip.id
   }
+  
+  # Remove
+  frontend_ip_configuration { 
+    name = "${azurerm_public_ip.publicip.id}-private" 
+    subnet_id = "${data.azurerm_subnet.appgwsubnet.id}" 
+    private_ip_address_allocation = "Dynamic" 
+    } 
 
   backend_address_pool {
     name = "${azurerm_virtual_network.testnetwork.name}-beap"
