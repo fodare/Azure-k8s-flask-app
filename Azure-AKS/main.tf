@@ -73,7 +73,7 @@ resource "azurerm_virtual_network" "testnetwork"{
   }
 
   subnet {
-    name = "appgwsubet"
+    name = "appgwsubnet"
     address_prefix = var.app_gateway_subnet_address_prefix
   }
 
