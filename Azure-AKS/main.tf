@@ -77,7 +77,7 @@ resource "azurerm_virtual_network" "testnetwork"{
     address_prefix = var.app_gateway_subnet_address_prefix
   }
 
-  tags = var.environment
+  # tags = var.environment
 }
 
 
@@ -158,7 +158,7 @@ resource "azurerm_application_gateway" "appgateway" {
     backend_address_pool_name = "${azurerm_virtual_network.testnetwork.name}-beap"
     backend_http_settings_name = "${azurerm_virtual_network.testnetwork.name}-be-htst"
   }
-  tags  = var.environment
+  # tags  = var.environment
   
   depends_on = [ azurerm_virtual_network.testnetwork, azurerm_public_ip.publicip ]
 }
