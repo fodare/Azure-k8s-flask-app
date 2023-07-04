@@ -87,7 +87,9 @@ resource "azurerm_public_ip" "publicip" {
   resource_group_name = azurerm_resource_group.resource_group.name
   allocation_method = "Static"
   sku = "Standard"
-  tags =  var.environment
+  tags = {
+    enviroment: var.environment
+  }
 }
 
 data "azurerm_subnet" "appgwsubnet" {
