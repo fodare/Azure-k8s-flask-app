@@ -113,7 +113,7 @@ resource "azurerm_application_gateway" "appgateway" {
   location = var.location
   sku {
     name = var.app_gateway_sku
-    tier = "Standard_v1"
+    tier = "Standard"
     capacity = 2
   }
 
