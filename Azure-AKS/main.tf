@@ -85,7 +85,7 @@ resource "azurerm_public_ip" "publicip" {
   name = "publicip"
   location = var.location
   resource_group_name = azurerm_resource_group.resource_group.name
-  allocation_method = "Static"
+  allocation_method = "Dynamic"
   sku = "Standard"
   tags = {
     enviroment: var.environment
