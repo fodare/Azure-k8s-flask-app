@@ -134,7 +134,7 @@ resource "azurerm_application_gateway" "appgateway" {
   
   # Remove
   frontend_ip_configuration { 
-    name = "${azurerm_public_ip.publicip.id}" 
+    name = "${azurerm_public_ip.publicip.name}" 
     subnet_id = data.azurerm_subnet.appgwsubnet.id
     private_ip_address_allocation = "Dynamic" 
     } 
