@@ -38,11 +38,11 @@ steps:
     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(ssh_public_key.secureFilePath)'
     allowTelemetryCollection: true
 
-# - task: TerraformCLI@0
-#   displayName: Terraform destroy
-#   inputs:
-#     command: 'destroy'
-#     workingDirectory: '$(System.DefaultWorkingDirectory)/Azure-AKS'
-#     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(ssh_public_key.secureFilePath)'
-#     allowTelemetryCollection: true
+- task: TerraformCLI@0
+  displayName: Terraform destroy
+  inputs:
+    command: 'destroy'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Azure-AKS'
+    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(ssh_public_key.secureFilePath)'
+    allowTelemetryCollection: true
 
