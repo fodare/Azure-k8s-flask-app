@@ -10,10 +10,12 @@ steps:
   displayName: 'Run a one-line script'
 
 - task: DownloadSecureFile@1
+  displayName: Download seecure files
   name: ssh_public_key
   inputs:
     secureFile: 'azure_rsa.pub'
 - task: TerraformCLI@0
+  displayName: Terraform init
   inputs:
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Azure-AKS'
@@ -29,16 +31,18 @@ steps:
     allowTelemetryCollection: true
 
 - task: TerraformCLI@0
+  displayName: Terraform apply
   inputs:
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/Azure-AKS'
     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(ssh_public_key.secureFilePath)'
     allowTelemetryCollection: true
 
-- task: TerraformCLI@0
-  inputs:
-    command: 'destroy'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/Azure-AKS'
-    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(ssh_public_key.secureFilePath)'
-    allowTelemetryCollection: true
+# - task: TerraformCLI@0
+#   displayName: Terraform destroy
+#   inputs:
+#     command: 'destroy'
+#     workingDirectory: '$(System.DefaultWorkingDirectory)/Azure-AKS'
+#     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(ssh_public_key.secureFilePath)'
+#     allowTelemetryCollection: true
 
