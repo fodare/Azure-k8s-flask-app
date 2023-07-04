@@ -77,16 +77,14 @@ resource "azurerm_virtual_network" "testnetwork"{
     address_prefix = var.app_gateway_subnet_address_prefix
   }
 
-  tags {
-    enviroment = var.environment
-  }
+  tags = var.environment
 }
 
 
 resource "azurerm_public_ip" "publicip" {
   name = "publicip"
   location = var.location
-  resource_group_name = var.azurerm_resource_group.resource_group.name
+  resource_group_name = azurerm_resource_group.resource_group.name
   allocation_method = "Static"
   sku = "Standard"
   tags = {
