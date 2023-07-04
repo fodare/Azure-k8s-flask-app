@@ -112,8 +112,8 @@ resource "azurerm_application_gateway" "appgateway" {
   resource_group_name = azurerm_resource_group.resource_group.name
   location = var.location
   sku {
-    name = "Standard_v2"
-    tier = "Standard_v2"
+    name = "Standard_Small"
+    tier = "Standard"
     capacity = 2
   }
 
