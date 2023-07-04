@@ -29,7 +29,7 @@ variable "resource_group" {
 
 # Ingress configuration start here
 
-variable "virtual_network _name" {
+variable "virtual_network_name" {
   description = "Virtual network name"
   default = "aksVirtualNetwork"
 }
