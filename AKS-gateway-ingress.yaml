@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: flask-app-ingress
+  # annotations:
+  #   nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: azure-application-gateway
+  rules:
+  - http:
+      paths:
+      - path: /frontendservice/
+        pathType: Prefix
+        backend:
+          service: 
+           name: frontendservice
+           port:
+              number: 5000     
+      - path:  /backendservice/
+        pathType: Prefix
+        backend:
+          service: 
+           name: backendservice
+           port:
+              number: 5001
+      
+
+
+
+
+
+      # - path: /frontendservice/*
+      #   backend:
+      #     serviceName: frontendservice
+      #     servicePort: 5000
+      # - path: /backendservice/*
+      #   backend:
+      #     serviceName: backendservice
+      #     servicePort: 5001
+
+
+
