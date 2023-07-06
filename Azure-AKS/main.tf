@@ -35,10 +35,10 @@ resource "azurerm_kubernetes_cluster" "terraform-k8s" {
   }
 
   default_node_pool {
-    name           = "agentpool"
-    node_count     = var.node_count
-    vm_size        = "standard_b2ms"
-    vnet_subnet_id = data.azurerm_subnet.kubesubnet.id
+    name       = "agentpool"
+    node_count = var.node_count
+    vm_size    = "standard_b2ms"
+    # vnet_subnet_id = data.azurerm_subnet.kubesubnet.id
     # vm_size         = "standard_d2as_v5"      CHANGE IF AN ERROR ARISES 
   }
 
@@ -47,17 +47,17 @@ resource "azurerm_kubernetes_cluster" "terraform-k8s" {
     client_secret = var.client_secret
   }
 
-  network_profile {
-    network_plugin     = "azure"
-    dns_service_ip     = var.aks_dns_service_ip
-    docker_bridge_cidr = var.aks_docker_bridge_cidr
-    service_cidr       = var.aks_service_cidr
-  }
+  # network_profile {
+  #   network_plugin     = "azure"
+  #   dns_service_ip     = var.aks_dns_service_ip
+  #   docker_bridge_cidr = var.aks_docker_bridge_cidr
+  #   service_cidr       = var.aks_service_cidr
+  # }
 
   tags = {
     Environment = var.environment
   }
-  depends_on = [azurerm_virtual_network.testnetwork, azurerm_application_gateway.appgateway]
+  # depends_on = [azurerm_virtual_network.testnetwork, azurerm_application_gateway.appgateway]
 }
 
 # Virtual network
