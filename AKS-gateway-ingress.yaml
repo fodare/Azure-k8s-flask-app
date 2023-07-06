@@ -23,20 +23,6 @@ spec:
            name: backendservice
            port:
               number: 5001
-      
-
-
-
-
-
-      # - path: /frontendservice/*
-      #   backend:
-      #     serviceName: frontendservice
-      #     servicePort: 5000
-      # - path: /backendservice/*
-      #   backend:
-      #     serviceName: backendservice
-      #     servicePort: 5001
 
 
 

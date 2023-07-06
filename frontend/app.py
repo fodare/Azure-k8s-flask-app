@@ -18,7 +18,7 @@ def get_host_details():
     return str(host_name), str(host_ip_address)
 
 
-@app.route("/")
+@app.route("frontendservice/")
 def health_check():
     response_object = {
         "Success": True,
