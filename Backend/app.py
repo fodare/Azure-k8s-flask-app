@@ -11,7 +11,7 @@ session = requests.Session()
 random_user_url = "https://randomuser.me/api/?gender="
 
 
-@app.route("backendservice/")
+@app.route("/backendservice/")
 def health_check():
     response_object = {
         "Success": True,
